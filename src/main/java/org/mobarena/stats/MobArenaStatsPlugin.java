@@ -3,20 +3,15 @@ package org.mobarena.stats;
 import com.garbagemule.MobArena.MobArena;
 import com.garbagemule.MobArena.commands.CommandHandler;
 import com.garbagemule.MobArena.events.MobArenaReloadEvent;
-import org.bstats.bukkit.Metrics;
+// import org.bstats.bukkit.Metrics;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
-import org.mobarena.stats.command.ArenaStatsCommand;
-import org.mobarena.stats.command.DeleteSessionStatsCommand;
-import org.mobarena.stats.command.ExportCommand;
-import org.mobarena.stats.command.GlobalStatsCommand;
-import org.mobarena.stats.command.ImportCommand;
-import org.mobarena.stats.command.PlayerStatsCommand;
-import org.mobarena.stats.metrics.StoreTypeChart;
+import org.mobarena.stats.command.*;
+// import org.mobarena.stats.metrics.StoreTypeChart;
 import org.mobarena.stats.platform.AsyncBukkitExecutor;
 import org.mobarena.stats.platform.SyncBukkitExecutor;
 import org.mobarena.stats.session.SessionListener;
@@ -123,6 +118,7 @@ public class MobArenaStatsPlugin extends JavaPlugin implements MobArenaStats {
         handler.register(new ArenaStatsCommand(this));
         handler.register(new GlobalStatsCommand(this));
         handler.register(new PlayerStatsCommand(this));
+        handler.register(new ArenaPlayerStatsCommand(this));
 
         // Admin commands
         handler.register(new DeleteSessionStatsCommand(this));
@@ -131,8 +127,8 @@ public class MobArenaStatsPlugin extends JavaPlugin implements MobArenaStats {
     }
 
     private void setupMetrics() {
-        Metrics metrics = new Metrics(this, 11932);
-        metrics.addCustomChart(new StoreTypeChart(this));
+        // Metrics metrics = new Metrics(this, 11932);
+        // metrics.addCustomChart(new StoreTypeChart(this));
     }
 
     private void registerReloadListener() {

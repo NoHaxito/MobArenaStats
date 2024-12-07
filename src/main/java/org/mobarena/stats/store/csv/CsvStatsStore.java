@@ -7,10 +7,7 @@ import org.mobarena.stats.session.PlayerSessionStats;
 import org.mobarena.stats.session.Session;
 import org.mobarena.stats.session.SessionConclusion;
 import org.mobarena.stats.session.SessionStats;
-import org.mobarena.stats.store.ArenaStats;
-import org.mobarena.stats.store.GlobalStats;
-import org.mobarena.stats.store.PlayerStats;
-import org.mobarena.stats.store.StatsStore;
+import org.mobarena.stats.store.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -168,6 +165,11 @@ public class CsvStatsStore implements StatsStore {
 
     @Override
     public PlayerStats getPlayerStats(String name) {
+        throw new UnsupportedOperationException("Queries are not supported by the CSV data store");
+    }
+
+    @Override
+    public ArenaPlayerStats getPlayerStatsByArena(String name, String arenaSlug) {
         throw new UnsupportedOperationException("Queries are not supported by the CSV data store");
     }
 

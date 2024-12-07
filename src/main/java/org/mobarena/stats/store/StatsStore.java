@@ -43,6 +43,8 @@ public interface StatsStore {
     // TODO: docs
     PlayerStats getPlayerStats(String name);
 
+    ArenaPlayerStats getPlayerStatsByArena(String playerName, String arenaSlug);
+
     // TODO: docs
     void export(StatsStore target) throws IOException;
 

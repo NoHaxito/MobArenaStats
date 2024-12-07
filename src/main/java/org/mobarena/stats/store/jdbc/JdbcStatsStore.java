@@ -10,10 +10,7 @@ import org.mobarena.stats.session.PlayerSessionStats;
 import org.mobarena.stats.session.Session;
 import org.mobarena.stats.session.SessionConclusion;
 import org.mobarena.stats.session.SessionStats;
-import org.mobarena.stats.store.ArenaStats;
-import org.mobarena.stats.store.GlobalStats;
-import org.mobarena.stats.store.PlayerStats;
-import org.mobarena.stats.store.StatsStore;
+import org.mobarena.stats.store.*;
 import org.mobarena.stats.util.ResourceLoader;
 
 import java.io.IOException;
@@ -23,14 +20,7 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.logging.Logger;
 
-import static org.mobarena.stats.store.jdbc.Statement.DELETE_SESSION_DATA;
-import static org.mobarena.stats.store.jdbc.Statement.FIND_ARENA_STATS;
-import static org.mobarena.stats.store.jdbc.Statement.FIND_GLOBAL_STATS;
-import static org.mobarena.stats.store.jdbc.Statement.FIND_PLAYER_SESSIONS_BY_ID;
-import static org.mobarena.stats.store.jdbc.Statement.FIND_PLAYER_STATS;
-import static org.mobarena.stats.store.jdbc.Statement.FIND_SESSIONS;
-import static org.mobarena.stats.store.jdbc.Statement.INSERT_PLAYER_DATA;
-import static org.mobarena.stats.store.jdbc.Statement.INSERT_SESSION_DATA;
+import static org.mobarena.stats.store.jdbc.Statement.*;
 
 public class JdbcStatsStore implements StatsStore {
 
@@ -132,6 +122,22 @@ public class JdbcStatsStore implements StatsStore {
                 rs.getLong("total_waves")
             ))
             .first()
+        );
+    }
+
+    @Override
+    public ArenaPlayerStats getPlayerStatsByArena(String playerName, String arenaSlug) {
+        return jdbi.withHandle(handle -> handle
+                .createQuery(statements.get(FIND_PLAYER_STATS_BY_ARENA))
+                .bind("player_name", playerName)
+                .bind("arena_slug", arenaSlug)
+                .map((rs, ctx) -> new ArenaPlayerStats(
+                        rs.getInt("total_sessions"),
+                        rs.getLong("total_kills"),
+                        rs.getInt("total_waves"),
+                        rs.getLong("total_seconds")
+                ))
+                .first()
         );
     }
 

@@ -13,7 +13,8 @@ INSERT INTO player_sessions (
   swings,
   hits,
   last_wave,
-  conclusion
+  conclusion,
+  arena_slug
 ) VALUES (
   :player_id,
   :player_name,
@@ -33,5 +34,10 @@ INSERT INTO player_sessions (
   :swings,
   :hits,
   :last_wave,
-  :conclusion
+  :conclusion,
+  (
+      SELECT arena_slug
+      FROM sessions s
+      WHERE s.session_id = :session_id
+  )
 );

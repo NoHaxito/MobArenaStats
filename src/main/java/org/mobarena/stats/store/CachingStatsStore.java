@@ -60,6 +60,11 @@ public class CachingStatsStore implements StatsStore {
     }
 
     @Override
+    public ArenaPlayerStats getPlayerStatsByArena(String name, String arenaSlug) {
+        return delegate.getPlayerStatsByArena(name, arenaSlug);
+    }
+
+    @Override
     public void export(StatsStore target) throws IOException {
         delegate.export(target);
     }
